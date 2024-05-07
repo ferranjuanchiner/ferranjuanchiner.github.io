@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Black Hat: La Infiltración</title>
+  <style>
+     body {
+      font-family: sans-serif;
+      margin: 20px;
+      background-image: url('https://www.sedarasecurity.com/wp-content/uploads/2022/04/The-Top-5-Security-Breaches-of-2021.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.6); /* White with 0.7 opacity */
+    }
+
+    .content {
+      position: relative;
+      z-index: 1; /* Ensure the content is above the overlay */
+    }
+
+    .contenedor-botones {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+
+    .boton {
+      background-color: #4c91af; /* Verde */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    .boton:hover {
+      background-color: #3e6d8e; /* Verde oscuro */
+    }
+
+    .pregunta {
+      border: 1px solid #ccc;
+      padding: 15px;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .respuesta {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+    <div class="overlay"></div> <!-- Overlay -->
+    <div class="content">
+  <h1>Black Hat: La Infiltración</h1>
+
+  <div class="contenedor-botones">
+    <button class="boton" id="btnFacil">Fácil</button>
+    <button class="boton" id="btnMedia">Media</button>
+    <button class="boton" id="btnDificil">Difícil</button>
+  </div>
+
+  <div id="pregunta-contenedor" class="pregunta"></div>
+  <button class="boton" id="btnOcultar" onclick="ocultarPregunta()">Ocultar</button>
+  <script>
+    // Listas de preguntas por nivel de dificultad
+    const preguntasFaciles = [
+    "1. ¿Qué cal fer si rebeu un correu electrònic d'una font desconeguda que us demana informació personal o us ofereix premis increïbles?<br>A) Obrir el correu electrònic i fer clic en qualsevol enllaç o adjunt que contingui.<br>B) Respondre al correu electrònic i proporcionar la informació sol·licitada.<br>C) <b>Eliminar el correu electrònic immediatament sense obrir-lo.</b><br>D) Reenviar el correu electrònic als teus amics per avisar-los.",
+  "2. Què és el phishing?<br>A) Un tipus de malware que infecta els dispositius i xifra els seus arxius.<br>B) <b>Un intent d'accedir a un compte d'usuari sense el seu consentiment fingint ser algú que no és.</b><br>C) Un programa informàtic que protegeix els seus dispositius contra virus i altres amenaces en línia.<br>D) Un conjunt de normes i procediments per garantir la seguretat de les xarxes informàtiques.",
+  "3. Què és important actualitzar el programari del seu ordinador?<br>A) Les actualitzacions de programari poden causar problemes amb el seu ordinador i s'haurien d'evitar.<br>B) <b>Les actualitzacions de programari sovint contenen correccions de seguretat que protegeixen el seu dispositiu contra vulnerabilitats.</b><br>C) Les actualitzacions de programari no són necessàries si el programari funciona correctament.<br>D) Les actualitzacions de programari poden eliminar funcions importants del seu programari i s'haurien d'instal·lar amb precaució.",
+  "4. Quina és la manera més segura de fer compres en línia?<br>A) Comprar en llocs web que no coneix.<br>B) Introduir la seva informació personal en qualsevol lloc web que la sol·liciti.<br>C) <b>Assegurar-se que el lloc web té un certificat SSL i que la URL comença per 'https://'.</b><br>D) Enviar la seva informació de pagament per correu electrònic.",
+  "5. Què és important tenir en compte quan utilitza una xarxa Wi-Fi pública?<br>A) Les xarxes Wi-Fi públiques solen ser gratuïtes i, per tant, són segures.<br>B) <b>Les xarxes Wi-Fi públiques solen estar obertes i no xifrades, permetent que qualsevol pugui interceptar el seu tràfic.</b><br>C) No cal preocupar-se per la seva seguretat quan utilitza una xarxa Wi-Fi pública si té un VPN instal·lat.<br>D) Pot connectar-se a qualsevol xarxa Wi-Fi pública sense preocupar-se per la seva privacitat.",
+  "6. ¿Cúal es la causa más común de los ciberataques en una organización?<br>A) Software vulnerable<br><b>/B) Técnicas de ingeniería social</b><br>C) Malware<br>D) Phishing",
+  "7. Un hacker ___ es alguien que puede no seguir estándares éticos, pero no tiene intenciones maliciosas.<br>A) Black Hat<br>B) White Hat<br><b>C) Gray Hat</b><br>D) Red Hat",
+  "8. ¿Qué implica un ataque 'Man-in-the-Middle' (MitM)?<br>A) <b>Interceptar la comunicación entre dos partes sin su conocimiento.</b><br>B) Instalar software malicioso en un servidor de red<br>C) Interrumpir los servicios de una red.<br>D) Desencriptar contraseñas encriptadas.",
+  "9. ¿Cuál es la función de un honeypot en ciberseguridad?<br>A) Proteger contra ataques ocasionales.<br>B) <b>Recopilar información sobre ataques.</b><br>C) Encriptar datos de forma segura.<br>D) Bloquear tráfico no productivo en la red.",
+  "10. ¿Qué tipo de ataque implica la desfiguración o desprestigio de una página web?<br>A) Infiltración<br>B) Phishing<br>C) <b>Defacement</b><br>D) Pharming"
+];
+
+
+    const preguntasMedias = [
+    "1. Quina d'aquestes opcions NO és un tipus de malware?<br>A) Virus<br>B) Ransomware<br>C) Phishing<br>D) <b>Firewall</b>",
+  "2. Quina és la pràctica recomanada per crear contrasenyes fortes?<br>A) Utilitzar contrasenyes fàcils de recordar com dates de naixement o noms d'animals.<br>B) Compartir les contrasenyes amb amics o familiars per si necessiten accedir al compte.<br>C) <b>Crear contrasenyes llargues i complexes que combinin lletres majúscules, minúscules, números i símbols.</b><br>D) Reutilitzar la mateixa contrasenya per a diversos comptes en línia.",
+  "3. Què és un atac de denegació de servei (DoS)?<br>A) Un tipus de malware que infecta els dispositius i xifra els seus arxius.<br>B) Un intent d'accedir a un compte d'usuari sense el seu consentiment fingint ser algú que no és.<br>C) <b>Un atac que inunda un servidor amb tràfic fals per impedir que els usuaris legítims puguin accedir-hi.</b><br>D) Un tipus de programari que protegeix els dispositius contra virus i altres amenaces en línia.",
+  "4. Què és la protecció de dades personals?<br>A) La pràctica de protegir les dades dels pirates informàtics i altres amenaces en línia.<br>B) <b>El dret dels individus a controlar la recopilació i l'ús de les seves dades personals.</b><br>C) Un tipus de programari que s'utilitza per xifrar els arxius i protegir-los de l'accés no autoritzat.<br>D) Un conjunt de normes i procediments per garantir la seguretat de les xarxes informàtiques.",
+  "5. Quina és la importància de les actualitzacions de programari?<br>A) Les actualitzacions de programari poden causar problemes amb els ordinadors i s'haurien d'evitar.<br>B) <b>Les actualitzacions de programari sovint contenen correccions de seguretat que protegeixen els dispositius contra vulnerabilitats.</b><br>C) Les actualitzacions de programari no són necessàries si el programari funciona correctament.<br>D) Les actualitzacions de programari poden eliminar funcions importants del programari i s'haurien d'instal·lar amb precaució.",
+  "6. Quina és la millor manera de protegir-se del phishing?<br>A) Obrir tots els correus electrònics que rebeu, fins i tot si no els reconeixeu.<br>B) Fer clic en els enllaços i adjunts en correus electrònics sospitosos, ja que podrien contenir malware.<br>C) <b>Verificar l'adreça de correu electrònic del remitent i la URL dels enllaços abans de fer clic.</b><br>D) Descarregar i instal·lar programari antivirus i antispam en el vostre dispositiu.",
+  "7. Quina és la importància d'una política de contrasenyes?<br>A) Una política de contrasenyes no és necessària si els usuaris trien contrasenyes fortes per si mateixos.<br>B) Una política de contrasenyes estableix requisits mínims de longitud, complexitat i freqüència de canvi de contrasenyes.<br>C) Una política de contrasenyes pot ajudar a reduir el risc de fuites de dades i atacs cibernétics.<br>D) <b>Totes les opcions anteriors són correctes.</b>",
+  "8. Què és la navegació segura?<br>A) La pràctica d'utilitzar un navegador web segur per protegir-se de les amenaces en línia.<br>B) La pràctica d'evitar visitar llocs web sospitosos o que puguin contenir malware.<br>C) La pràctica de mantenir el navegador actualitzat i utilitzar complements de seguretat.<br>D) <b>Totes les opcions anteriors són correctes.</b>",
+  "9. Quina és la diferència entre una xarxa Wi-Fi pública i una privada?<br>A) Les xarxes Wi-Fi públiques solen ser gratuïtes, mentre que les xarxes privades solen ser de pagament.<br>B) Les xarxes Wi-Fi públiques no solen estar xifrades, mentre que les xarxes privades solen estar xifrades.<br>C) Les xarxes Wi-Fi públiques no solen requerir contrasenya, mentre que les xarxes privades solen requerir contrasenya.<br>D) <b>Totes les opcions anteriors són correctes</b>.",
+  "10. Quina és la importància de la conscienciació sobre la ciberseguretat en les empreses?<br>A) La conscienciació sobre la ciberseguretat pot ajudar a reduir el risc d'atacs cibernétics.<br>B) La conscienciació sobre la ciberseguretat pot ajudar a protegir les dades dels clients i de l'empresa.<br>C) La conscienciació sobre la ciberseguretat pot ajudar a complir amb les lleis i regulacions de protecció de dades.<br>D) <b>Totes les opcions anteriors són correctes.</b>",
+  "11. ¿Qué es la criptografía homomórfica?<br>A) Un cifrado que solo utiliza claves privadas.<br>B) <b>Un cifrado que permite realizar operaciones sobre datos cifrados.</b><br>C) Un cifrado exclusivo para datos en reposo.<br>D) Un cifrado asimétrico.",
+  "12. En el año 2014, 4,278 direcciones IP de computadoras zombies se usaron para inundar a una empresa con más de un millón de paquetes por minuto durante aproximadamente una hora. ¿Cómo se llama este tipo de ataque?<br>A) Packet flooding<br>B) Dos Attack<br>C) <b>DDos Attack</b><br>D) Botnet Attack",
+  "13. ¿Cuál es el principio de Kerkhoffs en criptografía?<br>a. La clave debe ser pública.<br>b. <b>El sistema debe ser seguro incluso si se conoce todo, excepto la clave.</b><br>c. La clave debe cambiar constantemente.<br>d. La clave debe ser corta para mayor seguridad.",
+  "14. ¿Qué tipo de ataque utiliza correos electrónicos formales para incitar a personas específicas a iniciar sesión y cambiar sus contraseñas?<br>A) Vishing<br>B) <b>Spear phishing</b><br>C) Smishing<br>D) Whaling",
+  "15. ¿Qué lenguaje de programación es más susceptible a los ataques de desbordamiento de buffer?<br>A) Java<br>B) Python<br>C) <b>C</b><br>D) Php",
+  "16. ¿Cuál es el último paso en el proceso de respuesta a incidentes después de recuperar un servidor?<br> A) Erradicación / Remediación<br> B) Certificación<br> C) Informe<br> D) <b>Lecciones aprendidas</b>",
+  "17. Estás en una cafetería y te conectas a un punto de acceso inalámbrico público. ¿Qué tipo de ataque de seguridad cibernética es más probable que experimentes?<br>A) <b>Man in the Middle</b><br>B) Rootkit<br>C) IP Spoofing<br>D) Back Door",
+  "18. ¿Qué opción es una solución de código abierto para escanear una red en busca de hosts activos y puertos abiertos?<br>A) Snort<br>B) Wireshark<br>C) <b>Nmap</b><br>D) Nikto",
+  "19. ¿Cuántas claves serían necesarias para alojar a 100 usuarios en un sistema de criptografía asimétrica?<br>A) 100<br>B) <b>200</b><br>C) 300<br>D) 400",
+  "20. Su equipo de seguridad recomienda agregar una capa de defensa contra amenazas persistentes emergentes y exploits de día cero para todos los dispositivos finales de su red. La solución debe ofrecer protección contra amenazas externas para dispositivos conectados a la red, independientemente del sistema operativo. ¿Qué solución es la más adecuada para cumplir con este requisito?<br>A) Security Information Event Management (SIEM)<br>B) Extended Detection and Response (XDR)<br>C) <b>Next Generation Firewall (NGFW)</b><br>D) Cloud App Security Broker (CASB)"
+];
+
+    const preguntasDificiles = [
+    "1. Quina tècnica d'atac cibernétic aprofita les vulnerabilitats de la cadena de subministrament per atacar objectius específics?<br>A) Atacs de phishing<br>B) Atacs d'home al mig (Man-in-the-Middle, MitM)<br>C) Atacs de ransomware<br>D) <b>Atacs de cadena de subministrament</b>",
+  "2. Quina tècnica de criptografia s'utilitza per protegir la comunicació en línia i garantir la confidencialitat, integritat i autenticació dels missatges?<br>A) Xifrat simètric<br>B) Xifrat asimètric<br>C) <b>Xifrat híbrid</b><br>D) Totes les opcions anteriors",
+  "3. Quina vulnerabilitat de programari permet a un atacant executar codi arbitrari en un sistema vulnerable?<br>A) Buffer overflow<br>B) Injecció de codi<br>C) Execució de codi remot (RCE)<br>D) <b>Totes les opcions anteriors</b>",
+  "4. Quina tècnica de protecció contra malware s'utilitza per identificar i eliminar programes maliciosos basant-se en signatures conegudes?<br>A) <b>Antivirus</b><br>B) Antispam<br>C) Firewall<br>D) Sandboxing",
+  "5. Quina norma internacional defineix els requisits de gestió de la seguretat de la informació per a les organitzacions?<br>A) <b>ISO 27001</b><br>B) NIST Cybersecurity Framework<br>C) PCI DSS<br>D) HIPAA",
+  "6. ¿Cuál es el modo de operación que cifra cada bloque de datos junto con el XOR del bloque cifrado previo?<br>a. ECB.<br>b. <b>CBC.</b><br>c. CTR.<br>d. HMAC.",
+  "7. Una brecha de datos personales, que pueda constituir un riesgo a los derechos y libertades de las personas:<br>A) Debe comunicarse a la Autoridad de Control en un plazo máximo de 48h.<br>B) Debe comunicarse siempre a las personas afectadas.<br>C)<b> Debe comunicarse a la AEPD cuando el establecimiento principal de la empresa se encuentre en cualquier país de la Unión Europea, independientemente del país de los afectados.</b><br>D) Si se trata de ámbito público, debe comunicarse a la AEPD, en todas las Comunidades Autónomas españolas salvo Cataluña, País Vasco y Andalucía.",
+  "8. En el contexto de un SIEM, ¿qué se entiende por normalización?<br>A) Ajustar los eventos recibidos a la curva normal, para detectar anomalías.<br>B) Estructurar la base de datos del SIEM en tercera forma normal.<br>C) <b>Organización de los datos para que aparezcan de forma similar en todos los registros y campos.</b><br>D) Eliminar los falsos positivos, para que sean tratados como eventos 'normales'",
+  "9. Un atacante ha descubierto que puede deducir información confidencial sensible analizando múltiples piezas de datos públicos menos sensibles. ¿Qué tipo de brecha de seguridad existe?<br>A) Agregación<br>B) <b>Inferencia</b><br>C) Inyección SQL<br>D) CORS (Cross-Origin Resource Sharing)",
+  "10. ¿Qué lista describe correctamente las técnicas de gestión de riesgos?<br>A) Aceptación del riesgo, mitigación del riesgo, contención del riesgo y calificación del riesgo<br>B) Evitación del riesgo, transferencia del riesgo, contención del riesgo y cuantificación del riesgo<br>C) Evitación del riesgo, mitigación del riesgo, contención del riesgo y aceptación del riesgo<br>D) <b>Evitación del riesgo, transferencia del riesgo, mitigación del riesgo y aceptación del riesgo</b>"
+];
+
+    // Inicializar variables
+    let preguntasUsadas = {}; // Objeto para almacenar preguntas ya usadas
+    let nivelActual = null; // Nivel de dificultad actual
+
+    // Función para obtener una pregunta aleatoria de una lista
+    function obtenerPreguntaAleatoria(listaPreguntas) {
+      const indiceAleatorio = Math.floor(Math.random() * listaPreguntas.length);
+      const preguntaSeleccionada = listaPreguntas[indiceAleatorio];
+
+      // Eliminar la pregunta de la lista para evitar repeticiones
+      listaPreguntas.splice(indiceAleatorio, 1);
+
+      return preguntaSeleccionada;
+    }
+
+    // Función para mostrar una pregunta aleatoria
+    function mostrarPregunta() {
+      const listaPreguntas = obtenerListaPreguntas();
+      const pregunta = obtenerPreguntaAleatoria(listaPreguntas);
+
+      if (pregunta) {
+        document.getElementById("pregunta-contenedor").innerHTML = `
+          <p class="pregunta">${pregunta}</p>
+        `;
+      } else {
+        document.getElementById("pregunta-contenedor").innerHTML = `
+          <p class="pregunta">¡Ya no hay más preguntas para este nivel!</p>
+        `;
+      }
+    }
+
+    function ocultarPregunta() {
+      document.getElementById("pregunta-contenedor").innerHTML = "";
+    }
+
+    // Función para obtener la lista de preguntas según el nivel actual
+    function obtenerListaPreguntas() {
+      switch (nivelActual) {
+        case "facil":
+          return preguntasFaciles;
+        case "media":
+          return preguntasMedias;
+        case "dificil":
+          return preguntasDificiles;
+        default:
+          return [];
+      }
+    }
+
+    // Agregar eventos de click
+    document.getElementById("btnFacil").addEventListener("click", function() {
+  nivelActual = "facil";
+  mostrarPregunta();
+});
+
+document.getElementById("btnMedia").addEventListener("click", function() {
+  nivelActual = "media";
+  mostrarPregunta();
+});
+
+document.getElementById("btnDificil").addEventListener("click", function() {
+  nivelActual = "dificil";
+  mostrarPregunta();
+});</script></body></html>
